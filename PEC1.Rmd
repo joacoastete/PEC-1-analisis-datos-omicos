@@ -3,13 +3,6 @@ title: "PEC 1 Análisis de Datos Ómicos"
 author: "Joaquín Astete Frugoni"
 date: "Abril 2020"
 output: 
-  html_document:
-    css: style.css
-    fig_caption: yes
-    toc: yes
-    toc_float:
-      collapsed: yes
-      smooth_scroll: no
   pdf_document: 
     fig_caption: yes
     fig_height: 4
@@ -17,6 +10,13 @@ output:
     toc: yes
     includes:
       in_header: my_header.tex
+  html_document:
+    css: style.css
+    fig_caption: yes
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: no
 bibliography: reference.bib
 nocite: |
   @de2013genomica
@@ -71,8 +71,8 @@ experimentData(rawData)<-myInfo
 
 # Abstract
 
-La Bronquiolitis Obliterante (BO) es una patología que se caracteriza por la fibrosis progresiva e irreversible de la pequeña vía aérea que produce la obstrucción de la misma. En el presente trabajo se analiza la expresión diferencial de genes en un modelo de BO en ratas expuestas a 2,3-Pentadiona. 
-Se detectaron diferencias en la expresión de genes involucrados en mecanismos inflamatorios, vías de la matriz extracelular y aparato ciliar. Un análisis específico de estos mecanismos moleculares podrián ser útil para estrageías terapéuticas de esta patología.
+La Bronquiolitis Obliterante (BO) es una patología que se caracteriza por la fibrosis progresiva e irreversible de la pequeña vía aérea que produce la obstrucción de la misma. En el presente trabajo se analiza la expresión diferencial de genes en un modelo de BO en ratas expuestas a 2,3-Pentanediona. 
+Se detectaron diferencias en la expresión de genes involucrados en mecanismos inflamatorios, vías de la matriz extracelular y aparato ciliar. Un análisis específico de estos mecanismos moleculares podrián ser útil para estrategías terapéuticas de esta patología.
 
 
 ## Repostiorio GitHub
@@ -82,11 +82,11 @@ https://github.com/joacoastete/PEC-1-analisis-datos-omicos.git
 
 # Objetivos
 
-* Utilizar una base de datos real de **GEO** para plicar los conocimientos aprendidos en la asignatura **Análisis de Datos Ómicos**
+* Utilizar una base de datos real de **GEO** para aplicar los conocimientos aprendidos en la asignatura **Análisis de Datos Ómicos**
 
 * Análisis de genes diferencialmente expresados en muestras de un modelo de BO en ratas
 
-* Establecer que vías moleculares pueden estar involucradas en la BO
+* Establecer que vías moleculares pueden estar involucradas en la fisiopatogenia de la BO
 
 
 # Materiales y Métodos
@@ -94,7 +94,7 @@ https://github.com/joacoastete/PEC-1-analisis-datos-omicos.git
 ## Datos
 
 Los datos utilizados para la realización del presente trabajo fueron obtenidos de la base de datos **Gene Expression Omnibus (GEO)**, se ha escogido la serie **[GSE52761](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52761)** que se corresponde con el estudio *"Gene expression in 2,3-Pentanedione Induced Bronchiolitis Oblliterans"*[@morgan2015gene].
-Dicho estudio analiza la expresión génica de un modelo en ratas de Bronquiolitis Obliterante al exponerlas a vapores de 2,3-Pentadiona comparados a un grupo control. Luego del análisis histopatológico de los pulmones de las ratas expuestas, se dividian las muestras según si presentaban fibrosis o no presentaban fibrosis
+Dicho estudio analiza la expresión génica de un modelo en ratas de Bronquiolitis Obliterante al exponerlas a vapores de 2,3-Pentanediona comparados a un grupo control. Luego del análisis histopatológico de los pulmones de las ratas expuestas, se dividieron las muestras según si presentaban fibrosis o no presentaban fibrosis
 Se han utilizado arrays de la marca Affymetrix® modelo *Rat Genome 230 2.0 Array*
 Se han generado las covariantes a partir de la información ofrecida en la  web de **GEO**
 
@@ -112,12 +112,12 @@ En el presente trabajo añadiré la comparación:
 
 * Fibrosis-No fibrosis
 
-Ya que sería interesante saber si analizar si se puede obtener información de genes que podrían intervenir en la protección contra la fibrosis
+Ya que sería interesante analizar si se puede obtener información de genes que podrían intervenir en la protección contra la fibrosis en las muestras expuestas a 2,3-Pentanediona.
 
 ## Preparación de datos
 
 Los datos se cargarán y analizaran principalmente con las herramientas del proyecto `Bioconductor`.
-Una vez cargados los archivos *.CEL* de los arrays y generado el objeto `ExpressionSet`. Se analizó la calidad de los datos a través del paquete`arrayQualityMetrics`.
+Una vez cargados los archivos *.CEL* de los arrays y generado el objeto `ExpressionSet`. Se analizó la calidad de los datos a través del paquete `arrayQualityMetrics`.
 
 ```{r arrayquality.raw, include=FALSE}
 #arrayQualityMetrics(rawData, outdir = file.path("./arrayquality.raw"),force = T)
@@ -136,6 +136,7 @@ boxplot(rawData, cex.axis=0.5, las=2,  which="all",
 
 Si bien en el bloxplot anterior cierta variabilidad entres las intensidades no se observa ningún array que pudiera resultar defectuoso.
 En el siguiente gráfico se analizan los dos Componentes Principales de los datos
+
 
 ```{r PCA, fig.align="center", fig.asp=0.6, fig.cap= "Grafico de Componente principal", echo=FALSE}
 plotPCA3 <- function (datos, labels, factor,scale,colores, size = 1.5, glineas = 0.25) {
@@ -176,7 +177,7 @@ boxplot(eset_rma, cex.axis=0.5, las=2,
         main="Distribucion de valores de intensidad: datos normalizados")
 ```
 
-En el boxplot anterior se observa que el proceso de normalización a funcionado correctamente ya que cada caja del boxplot son casi identicas. Lo que se corrobora con el análisis de `arrayQualityMetrics`:
+En el boxplot anterior se observa que el proceso de normalización a funcionado correctamente ya que cada caja del boxplot son casi identicas. Lo que se corroborá con el análisis de `arrayQualityMetrics`:
 
 ```{r arrayquality.rma, include=FALSE}
 #arrayQualityMetrics(eset_rma, outdir = file.path("./arrayquality.rma"),force = T)
@@ -193,11 +194,12 @@ plotPCA3(exprs(eset_rma), labels =pData(rawData)$shortname, factor = pData(rawDa
          scale = FALSE, size = 3, 
          colores = c("red", "blue", "green"))
 ```
-En el gráfico de los Componentes Principales de los datos normalizados se observa que la variabilidad por la exposición a 2,3-PD ha disminuido escasamente. Habría que corroborar si hay algún problema con la muestra correspondiente con el array *control.1*
+
+En el gráfico de los Componentes Principales de los datos normalizados se observa que la variabilidad por la exposición a 2,3-PD ha disminuido escasamente. Habría que corroborar si hay algún problema con la muestra correspondiente con el array *control.1* ya que se aleja bastante de las demás muestras del grupo control.
 
 ### Filtrado de genes
 
-Se utilizó el paquete `genefilter` para filtrar aquellos genes cuya variabilidad podría ser aleatoria, tambíen se han filtrados sondas que no tenían anontación asociada,  de esta manera se puede aumentar la potencia del estudio al disminuir el número de comparaciones.
+Se utilizó el paquete `genefilter` para filtrar aquellos genes cuya variabilidad podría ser aleatoria, tambíen se han filtrados sondas que no tenían anontación asociada. De esta manera se puede aumentar la potencia del estudio al disminuir el número de comparaciones.
 
 ```{r filter, include=FALSE}
 annotation(eset_rma) <- "rat2302.db"
@@ -221,10 +223,11 @@ Para el diseño de la matriz de contrastes, he establecido los siguientes contra
 
 * Fibrosis-No fibrosis
 
-toptable
+Se ha utilizado la función `topTable` para obtener la listas de genes de cada comparación , ordenados según su valor de significación estadística.
 Para el ajuste de los *p-valores* para comparaciones múltiples se ha utilizado el método de *False discovery Rate* propuesto por Benjamini and Hochberg [@Benjamini1995]
 Para las anotaciones de los genes de las sondas empleadas, se ha utilizado la base de datos `rat2302.db` correspondiente al modelo de microarray utilizado. 
 Para la selección y visualización de los genes diferencialmente expresados se ha utilizado un valor de corte de *FDR* de 0.05 y de *LogFC* de 1.
+Para la selección de genes que cambian en cada comparación se ha utilizado la función `decideTests`.
 Para el análisis de la significación biológica se ha utilizado el método de *Gene Set Enrichment Analysis* a través del paquete `reactomePA`. Se ha establecido como valor de corte de FDR <0.15 y como universo se ha establecido todo los genes que tengan por lo menos una anotación de *Gene Ontology*.
 
 # Resultados
@@ -254,7 +257,7 @@ Al realizar los contrastes entre los diferentes grupos, se seleccionaron los gen
 
 * Fibrosis-No fibrosis: `r res.sum[1,3]+res.sum[3,3]`
 
-En la siguiente tabla se puede observar el total de genes *up-regulated* y *down-regulated* para cada comparación
+En la siguiente tabla se puede observar el total de genes *up-regulated* y *down-regulated* para cada comparación.
 
 ````{r tabla.res, echo=FALSE}
 kable(res.sum, "latex", booktabs = T, caption=" Genes especialmente diferenciados entre comparaciones\n FDR<0.05 y logFC <1") %>%
@@ -378,12 +381,13 @@ print(barplot(enrich.result, title=paste0("Reactome Pathway Analysis para la com
 
 ```
 
-Se observa que las vías implicadas con el sistema ciliar y con la matriz celular están presente en los tres constrastes. Cabe destacar que en los contrastes de las muestras con fibrosis, también se ven implicadas vías relacionadas con mecanismos inflamatorios (degranulación de neutrofilos, activación del complemento, señalización de citoquinas). Matriz extracelular
+Se observa que las vías implicadas con el sistema ciliar y con la matriz extracelular están presente en los tres constrastes. Cabe destacar que en los contrastes de las muestras con fibrosis, también se ven implicadas vías relacionadas con mecanismos inflamatorios (degranulación de neutrofilos, activación del complemento, señalización de citoquinas).
 
 # Discusión
-cantidad de genes
-En el presente trabajo se analizó las alteraciones de expresión génica que se pueden encontrar en un modelo en ratas de Bronquiolitis Obliterante. La principal debilidad de este trabajo es el pequeño muestral ya que solo se obstuvieron 3 muestras de tejido fibrótico. También habría que reconsiderar dos muestras de los tejidos control que durante el procesado de datos, se observó que podría ser posibles muestras atípicas.
-En el trabajo se mostró que vías relacionadas con mecanismos inflamatorios podrían estar implicadas en la fisipatogenia de la Bronquiolitis Obliterante según el modelo animal emplado, por lo que habría que ampliar el estudio de estas vías para corroborar dicha hipotestis.
+
+En el presente trabajo se analizó las alteraciones de expresión génica que se pueden encontrar en un modelo en ratas de Bronquiolitis Obliterante. La principal debilidad de este trabajo es el pequeño muestral ya que solo se obstuvieron 3 muestras de tejido fibrótico. También habría que reconsiderar dos muestras de los tejidos control que durante el procesado de datos se observó que podría ser posibles muestras atípicas.
+
+En el trabajo se detectaron alrededor de 2000 genes expresados diferencialmente en el tejido fibroso. Se mostró que vías relacionadas con mecanismos inflamatorios podrían estar implicadas en la fisipatogenia de la Bronquiolitis Obliterante según el modelo animal emplado, por lo que habría que ampliar el estudio de estas vías para corroborar dicha hipótestis.
 
 # Apéndice
 
